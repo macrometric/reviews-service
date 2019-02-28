@@ -5,7 +5,7 @@ module.exports = {
       host: "localhost",
       port: 5432,
       user: "sms",
-      database: "testdb"
+      database: "secondtestdb"
     },
     migrations: {
       directory: __dirname + "/migrations"

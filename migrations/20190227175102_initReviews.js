@@ -1,5 +1,5 @@
 exports.up = async function(knex, Promise) {
-  await knex.schema.createTable("reviews", table => {
+  await knex.schema.createTable("secondtestdb", table => {
     table
       .increments("review_id")
       .unsigned()
