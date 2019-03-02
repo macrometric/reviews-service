@@ -33,6 +33,7 @@
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-star-rating-component": "^1.4.1",
+    "sqlite3": "^4.0.6",
     "victory": "^31.3.0"
   },
   "devDependencies": {

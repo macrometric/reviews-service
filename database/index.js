@@ -1,37 +1,48 @@
-const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://tdsmith27:homerepot@cluster0-cawa1.mongodb.net/reviews?retryWrites=true"
-);
+const config = require("../knexfile.js");
+const environment = "development";
+const knex = require("knex")(config[environment]);
 
-const reviewSchema = mongoose.Schema({
-  review_id: "number",
-  product_id: "number",
-  product_name: "string",
-  author: "string",
-  date: "string",
-  rating: "number",
-  review: "string"
-});
+const findById = knex("reviews")
+  .where({ product_id: 987264 })
+  .catch(err => console.log(err));
 
-const Review = mongoose.model("Review", reviewSchema);
+module.exports = { findById };
 
-const save = (doc, cb) => {
-  let review = new Review(doc);
+// const mongoose = require("mongoose");
+// mongoose.connect(
+//   "mongodb+srv://tdsmith27:homerepot@cluster0-cawa1.mongodb.net/reviews?retryWrites=true",
+//   { useNewUrlParser: true }
+// );
 
-  review
-    .save()
-    .then(data => cb(null, data))
-    .catch(err => cb(err));
-};
+// const reviewSchema = mongoose.Schema({
+//   review_id: "number",
+//   product_id: "number",
+//   product_name: "string",
+//   author: "string",
+//   date: "string",
+//   rating: "number",
+//   review: "string"
+// });
 
-const findById = (id, cb) => {
-  const query = Review.find({ product_id: id });
-  query
-    .exec()
-    .then(response => cb(null, response))
-    .catch(err => cb(err));
-};
+// const Review = mongoose.model("Review", reviewSchema);
 
-module.exports.save = save;
-module.exports.Review = Review;
-module.exports.findById = findById;
+// const save = (doc, cb) => {
+//   let review = new Review(doc);
+
+//   review
+//     .save()
+//     .then(data => cb(null, data))
+//     .catch(err => cb(err));
+// };
+
+// const findById = (id, cb) => {
+//   const query = Review.find({ product_id: id });
+//   query
+//     .exec()
+//     .then(response => cb(null, response))
+//     .catch(err => cb(err));
+// };
+
+// module.exports.save = save;
+// module.exports.Review = Review;
+// module.exports.findById = findById;
