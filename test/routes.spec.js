@@ -14,7 +14,21 @@ const routes = (req, res) => {
     });
 };
 
+const save = (req, res) => {
+  // console.log("req.body on post ->", req.body);
+  database.saveReview(req.body, (err, data) => {
+    if (err) console.log("error in db.save", err);
+    else {
+      console.log("hell yes");
+      res.sendStatus(201);
+    }
+  });
+};
+
 // *** GET all reviews *** //
 router.get("/products/:id/reviews", routes);
 
-(module.exports = router), routes;
+// *** POST reviews *** //
+router.post("/products/reviews", save);
+
+(module.exports = router), routes, save;

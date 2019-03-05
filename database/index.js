@@ -6,7 +6,23 @@ const findById = knex("reviews")
   .where({ product_id: 987264 })
   .catch(err => console.log(err));
 
-module.exports = { findById };
+const saveReview = (id, cb) => {
+  knex("reviews")
+    .insert({
+      review_id: 10000019,
+      product_id: 987264,
+      date: "2019-02-02T03:06:44.523Z",
+      rating: 4,
+      review: "Here's a test review."
+    })
+    .then(data => cb(null, data))
+    .catch(err => {
+      cb(err);
+      console.log(err);
+    });
+};
+
+module.exports = { findById, saveReview };
 
 // const mongoose = require("mongoose");
 // mongoose.connect(
