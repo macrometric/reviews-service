@@ -1,28 +1,37 @@
+// POSTGRES DATABASE QUERIES
+
 const config = require("../knexfile.js");
 const environment = "development";
 const knex = require("knex")(config[environment]);
 
-const findById = knex("reviews")
-  .where({ product_id: 987264 })
-  .catch(err => console.log(err));
+const findById = (id, cb) => {
+  knex("reviews")
+    .where({ product_id: id })
+    .then(data => cb(null, data))
+    .catch(err => {
+      cb(err);
+      console.log("error in findById", err);
+    });
+};
 
-const saveReview = (id, cb) => {
+const saveReview = (info, cb) => {
   knex("reviews")
     .insert({
-      review_id: 10000019,
-      product_id: 987264,
-      date: "2019-02-02T03:06:44.523Z",
-      rating: 4,
-      review: "Here's a test review."
+      product_id: info.product_id,
+      date: info.date,
+      rating: info.rating,
+      review: info.review
     })
     .then(data => cb(null, data))
     .catch(err => {
       cb(err);
-      console.log(err);
+      console.log("error in saveReview", err);
     });
 };
 
 module.exports = { findById, saveReview };
+
+// ORIGINAL CODE FOR MONGO DATABASE
 
 // const mongoose = require("mongoose");
 // mongoose.connect(

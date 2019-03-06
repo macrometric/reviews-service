@@ -10,7 +10,7 @@ const desiredFakeReviews = 1000000;
 // Make a fake review
 
 const createFakeReview = i => ({
-  review_id: i + 1,
+  // review_id: i + 1,
   product_id: i + 1,
   date: momentRandom(),
   rating: faker.random.number({ min: 1, max: 5 }),
@@ -24,7 +24,7 @@ const makeCSV1 = async function() {
     fakeReviews.push(createFakeReview(i));
   }
 
-  await new objectsToCSV(fakeReviews).toDisk("./csvFolder/reviews.csv", {
+  await new objectsToCSV(fakeReviews).toDisk("./csvFolder/reviews2.csv", {
     append: true
   });
 };
@@ -43,7 +43,7 @@ const makeCSV2 = async function() {
     fakeProducts.push(createFakeProduct(i));
   }
 
-  await new objectsToCSV(fakeProducts).toDisk("./csvFolder/products.csv", {
+  await new objectsToCSV(fakeProducts).toDisk("./csvFolder/products2.csv", {
     append: true
   });
 };
@@ -51,7 +51,7 @@ const makeCSV2 = async function() {
 // Make a fake user
 
 const createFakeUser = i => ({
-  review_id: i + 1,
+  // review_id: i + 1,
   author: faker.name.firstName() + " " + faker.name.lastName()
 });
 
@@ -62,7 +62,7 @@ const makeCSV3 = async function() {
     fakeUsers.push(createFakeUser(i));
   }
 
-  await new objectsToCSV(fakeUsers).toDisk("./csvFolder/users.csv", {
+  await new objectsToCSV(fakeUsers).toDisk("./csvFolder/users2.csv", {
     append: true
   });
 };
