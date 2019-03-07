@@ -21,21 +21,22 @@ app.use(cors());
 
 const routes = (req, res) => {
   let id = req.params.id;
-  console.log("here is the id", id);
+  // console.log("here is the id", id);
   database.findById(id, (err, data) => {
     if (err) {
       console.log(err);
       res.end();
     } else {
-      console.log("we have reviews!", data);
+      // console.log("we have reviews!", data);
       res.status(200).json(data);
     }
   });
 };
 
 const save = (req, res) => {
-  console.log("req.body on post ->", req.body);
-  database.saveReview(req.body, (err, data) => {
+  // console.log("req.body on post ->", req.body);
+  let item = req.body;
+  database.saveReview(item, (err, data) => {
     if (err) {
       console.log("error in db.save", err);
       res.end();
@@ -46,11 +47,45 @@ const save = (req, res) => {
   });
 };
 
+const update = (req, res) => {
+  let id = req.params.id;
+  let item = req.body;
+  database.updateReview(id, item, (err, data) => {
+    // console.log("req.body", req.body);
+    if (err) {
+      console.log("error in db.update", err);
+      res.end();
+    } else {
+      // console.log("awww yeah", data);
+      res.status(201).json(data);
+    }
+  });
+};
+
+const delReview = (req, res) => {
+  let id = req.params.id;
+  database.deleteReview(id, (err, data) => {
+    if (err) {
+      console.log("errre in db.delReview", err);
+      res.end();
+    } else {
+      // console.log("deleted that shizzz", data);
+      res.status(201).json(data);
+    }
+  });
+};
+
 // *** GET all reviews *** //
 app.get("/products/:id/reviews", routes);
 
-// *** POST reviews *** //
+// *** POST new reviews *** //
 app.post("/products/reviews", save);
+
+// *** POST update reviews *** //
+app.put("/products/:id/reviews", update);
+
+// *** DELETE a review *** //
+app.delete("/products/:id/reviews", delReview);
 
 // app.get("/products/:id/reviews", (req, res) => {
 //   let id = req.params.id;

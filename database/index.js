@@ -4,8 +4,19 @@ const config = require("../knexfile.js");
 const environment = "development";
 const knex = require("knex")(config[environment]);
 
+// const findById = (id, cb) => {
+//   knex("reviews")
+//     .where({ product_id: id })
+//     .then(data => cb(null, data))
+//     .catch(err => {
+//       cb(err);
+//       console.log("error in findById", err);
+//     });
+// };
+
 const findById = (id, cb) => {
   knex("reviews")
+    .join("users", "reviews.review_id", "=", "users.review_id")
     .where({ product_id: id })
     .then(data => cb(null, data))
     .catch(err => {
@@ -29,7 +40,36 @@ const saveReview = (info, cb) => {
     });
 };
 
-module.exports = { findById, saveReview };
+const updateReview = (id, info, cb) => {
+  knex("reviews")
+    .where("review_id", "=", id)
+    .update({
+      date: info.date,
+      rating: info.rating,
+      review: info.review
+    })
+    .then(data => {
+      // console.log("data in updateReview cb", data);
+      cb(null, data);
+    })
+    .catch(err => {
+      console.log("err in updateReview cb", err);
+      cb(err);
+    });
+};
+
+const deleteReview = (id, cb) => {
+  knex("reviews")
+    .where("review_id", "=", id)
+    .del()
+    .then(data => cb(null, data))
+    .catch(err => {
+      cb(err);
+      console.log("error in findById", err);
+    });
+};
+
+module.exports = { findById, saveReview, updateReview, deleteReview };
 
 // ORIGINAL CODE FOR MONGO DATABASE
 
