@@ -4,20 +4,11 @@ const config = require("../knexfile.js");
 const environment = "development";
 const knex = require("knex")(config[environment]);
 
-// const findById = (id, cb) => {
-//   knex("reviews")
-//     .where({ product_id: id })
-//     .then(data => cb(null, data))
-//     .catch(err => {
-//       cb(err);
-//       console.log("error in findById", err);
-//     });
-// };
-
 const findById = (id, cb) => {
   knex("reviews")
     .join("users", "reviews.review_id", "=", "users.review_id")
-    .where({ product_id: id })
+    .join("products", "reviews.product_id", "=", "products.product_id")
+    .where({ "reviews.product_id": id })
     .then(data => cb(null, data))
     .catch(err => {
       cb(err);
